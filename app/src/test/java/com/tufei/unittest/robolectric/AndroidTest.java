@@ -24,7 +24,7 @@ import static org.robolectric.Shadows.shadowOf;
  * @date 2018/1/22.
  */
 @RunWith(RobolectricTestRunner.class)
-public class RobolectricTest {
+public class AndroidTest {
 
     private TextView mTvHello;
     private Button mBtnJump;
