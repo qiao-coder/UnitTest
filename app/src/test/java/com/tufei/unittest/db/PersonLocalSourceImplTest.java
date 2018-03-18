@@ -97,4 +97,28 @@ public class PersonLocalSourceImplTest extends RobolectricTest {
                 .assertNoErrors()
                 .assertNotComplete();
     }
+
+    @Test
+    public void savePersons_deletePersons() {
+        Person tony = new Person(this.tony, Sex.MALE);
+        Person marry = new Person(this.marry, Sex.FEMALE);
+
+        localDataSource.savePerson(tony)
+                .test()
+                .assertNoErrors()
+                .assertComplete();
+        localDataSource.savePerson(marry)
+                .test()
+                .assertNoErrors()
+                .assertComplete();
+
+        localDataSource.deletePersons()
+                .test()
+                .assertComplete();
+
+        localDataSource.getPersons()
+                .test()
+                .assertNoErrors()
+                .assertNotComplete();
+    }
 }
