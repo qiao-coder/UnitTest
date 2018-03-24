@@ -7,9 +7,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -55,7 +52,39 @@ public class PowerMockSampleTest {
         //第一个参数，传的是class
         Whitebox.setInternalState(PowerMockSample.class, "privateStaticFinalField", newValue);
 
+        //mock失败
         assertNotEquals(newValue, PowerMockSample.getPrivateStaticFinalField());
     }
 
+    @Test
+    public void mockPrivateStaticFinalInt() {
+        int newValue = 2;
+
+        //第一个参数，传的是class
+        Whitebox.setInternalState(PowerMockSample.class, "privateStaticFinalInt", newValue);
+
+        //mock失败
+        assertNotEquals(newValue, PowerMockSample.getPrivateStaticFinalInt());
+    }
+
+    @Test
+    public void mockPrivateStaticFinalInteger() {
+        int newValue = 2;
+
+        //第一个参数，传的是class
+        Whitebox.setInternalState(PowerMockSample.class, "privateStaticFinalInteger", newValue);
+
+        assertEquals(newValue, PowerMockSample.getPrivateStaticFinalInteger());
+    }
+
+    @Test
+    public void mockPublicStaticFinalField() {
+        String newValue = "mockPublicStaticFinalField";
+
+        //第一个参数，传的是class
+        Whitebox.setInternalState(PowerMockSample.class, "publicStaticFinalField", newValue);
+
+        //mock失败
+        assertNotEquals(newValue, PowerMockSample.publicStaticFinalField);
+    }
 }
