@@ -75,4 +75,8 @@ public class PowerMockSample {
     public static int getPrivateStaticFinalInteger() {
         return privateStaticFinalInteger;
     }
+
+    public String callPrivateMethodReturnString() {
+        return privateMethodReturnString();
+    }
 }

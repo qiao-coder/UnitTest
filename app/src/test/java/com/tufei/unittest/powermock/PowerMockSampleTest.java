@@ -3,12 +3,17 @@ package com.tufei.unittest.powermock;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Mockito.spy;
+import static org.powermock.api.mockito.PowerMockito.doReturn;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * @author TuFei
@@ -86,5 +91,23 @@ public class PowerMockSampleTest {
 
         //mock失败
         assertNotEquals(newValue, PowerMockSample.publicStaticFinalField);
+    }
+
+    @Test
+    public void mockPrivateMethodReturnString() throws Exception {
+        String oleValue = "privateMethodReturnString";
+        String newValue = "mockPrivateMethodReturnString";
+
+        //不行，会报空指针
+        //PowerMockito.spy(PowerMockSample.class);
+        powerMockSample = PowerMockito.spy(powerMockSample);
+
+        assertEquals(oleValue, powerMockSample.callPrivateMethodReturnString());
+
+        //也可以
+        //when(powerMockSample, "privateMethodReturnString").thenReturn(newValue);
+        doReturn(newValue).when(powerMockSample, "privateMethodReturnString");
+
+        assertEquals(newValue, powerMockSample.callPrivateMethodReturnString());
     }
 }
