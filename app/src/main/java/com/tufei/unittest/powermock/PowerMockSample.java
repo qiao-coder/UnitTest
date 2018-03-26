@@ -42,15 +42,15 @@ public class PowerMockSample {
         return a + b;
     }
 
-    private void privateMethodNoRetrunThrowException() {
+    private void privateMethodNoReturnThrowException() {
         throw new NullPointerException();
     }
 
-    private static void privateStaticMethodNoRetrunThrowException() {
+    private static void privateStaticMethodNoReturnThrowException() {
         throw new NullPointerException();
     }
 
-    public static void publicStaticMethodNoRetrunThrowException() {
+    public static void publicStaticMethodNoReturnThrowException() {
         throw new NullPointerException();
     }
 
@@ -78,5 +78,25 @@ public class PowerMockSample {
 
     public String callPrivateMethodReturnString() {
         return privateMethodReturnString();
+    }
+
+    public int callPrivateMethodCalculate(int a, int b) {
+        return privateMethodCalculate(a, b);
+    }
+
+    public static String callPrivateStaticMethodReturnString() {
+        return privateStaticMethodReturnString();
+    }
+
+    public static int callPrivateStaticMethodCalculate(int a, int b) {
+        return privateStaticMethodCalculate(a, b);
+    }
+
+    public void callPrivateMethodNoReturnThrowException() {
+        privateMethodNoReturnThrowException();
+    }
+
+    public static void callPrivateStaticMethodNoReturnThrowException() {
+        privateStaticMethodNoReturnThrowException();
     }
 }
