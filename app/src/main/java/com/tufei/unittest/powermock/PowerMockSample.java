@@ -6,17 +6,22 @@ package com.tufei.unittest.powermock;
  */
 public class PowerMockSample {
 
-    private String privateFiled = "privateFiled";
+    private String privateString = "privateString";
 
-    private static String privateStaticField = "privateStaticField";
+    private static String privateStaticString = "privateStaticString";
 
-    private static final String privateStaticFinalField = "privateStaticFinalField";
+    private static final String privateStaticFinalString = "privateStaticFinalString";
 
     private static final int privateStaticFinalInt = 1;
 
     private static final Integer privateStaticFinalInteger = 1;
 
-    public static final String publicStaticFinalField = "publicStaticFinalField";
+    public static final String publicStaticFinalString = "publicStaticFinalString";
+
+    private int privateMethodCalculateThrowException(int a, int b) {
+        System.out.println("a = " + a + ",b = " + b);
+        throw new NullPointerException();
+    }
 
     private String privateMethodReturnString() {
         return "privateMethodReturnString";
@@ -31,10 +36,16 @@ public class PowerMockSample {
     }
 
     private static int privateStaticMethodCalculate(int a, int b) {
+        if(true){
+            throw new  NullPointerException();
+        }
         return a + b;
     }
 
     public static String publicStaticMethodReturnString() {
+        if(true){
+            throw new NullPointerException();
+        }
         return "publicStaticMethodReturnString";
     }
 
@@ -56,16 +67,16 @@ public class PowerMockSample {
 
     //********************************下面这些方法，只是为了验证测试结果*******************************
 
-    public String getPrivateFiled() {
-        return privateFiled;
+    public String getPrivateString() {
+        return privateString;
     }
 
-    public static String getPrivateStaticField() {
-        return privateStaticField;
+    public static String getPrivateStaticString() {
+        return privateStaticString;
     }
 
-    public static String getPrivateStaticFinalField() {
-        return privateStaticFinalField;
+    public static String getPrivateStaticFinalString() {
+        return privateStaticFinalString;
     }
 
     public static int getPrivateStaticFinalInt() {
@@ -76,12 +87,16 @@ public class PowerMockSample {
         return privateStaticFinalInteger;
     }
 
-    public String callPrivateMethodReturnString() {
-        return privateMethodReturnString();
+    public int callPrivateMethodCalculateThrowException(int a, int b) {
+        return privateMethodCalculateThrowException(a, b);
     }
 
     public int callPrivateMethodCalculate(int a, int b) {
         return privateMethodCalculate(a, b);
+    }
+
+    public String callPrivateMethodReturnString() {
+        return privateMethodReturnString();
     }
 
     public static String callPrivateStaticMethodReturnString() {
