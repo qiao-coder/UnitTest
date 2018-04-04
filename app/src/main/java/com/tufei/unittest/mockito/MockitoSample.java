@@ -17,6 +17,10 @@ public class MockitoSample {
         return "publicMethodReturnString";
     }
 
+    public String publicMethodReturnStringButThrowException() {
+        throw new NullPointerException();
+    }
+
     public int publicMethodCalculate(int a, int b) {
         return a + b;
     }
