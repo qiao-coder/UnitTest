@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -55,6 +56,17 @@ public class MockitoSampleTest {
         when(mockSample.publicMethodReturnString()).thenReturn(expected);
         String actual = mockSample.publicMethodReturnString();
         assertEquals(expected, actual);
+    }
+
+    /**
+     * mock带参数的方法
+     */
+    @Test
+    public void mockPublicMethodCalculate_withArgs(){
+        int expected = 999;
+        when(mockSample.publicMethodCalculate(isA(int.class),isA(int.class))).thenReturn(expected);
+        int actual = mockSample.publicMethodCalculate(1, 2);
+        assertEquals(expected,actual);
     }
 
     /**
