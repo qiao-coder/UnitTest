@@ -12,10 +12,15 @@ import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -32,6 +37,7 @@ public class MockitoSampleTest {
     @Before
     public void setup() {
         //当有多个要mock或者spy的类。不需要一个个调用mock(Class(T))。这更简洁。
+        //等同于：
         //mockSample = mock(MockitoSample.class);
         //spySample = spy(MockitoSample.class);
         MockitoAnnotations.initMocks(this);
@@ -78,6 +84,45 @@ public class MockitoSampleTest {
         doReturn(expected).when(mockSample).publicMethodReturnString();
         String actual = mockSample.publicMethodReturnString();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void verify_publicMethodReturnString(){
+        verify(mockSample,never()).publicMethodReturnString();
+
+        mockSample.publicMethodReturnString();
+
+        //默认情况下是times(1)。times(1)可以被省略。
+        verify(mockSample).publicMethodReturnString();
+        mockSample.publicMethodReturnString();
+        verify(mockSample,times(2)).publicMethodReturnString();
+    }
+
+    @Test
+    public void verify_publicMethodCalculate(){
+        //可以不使用参数匹配器。
+        verify(mockSample,never()).publicMethodCalculate(1,2);
+
+        //如果你使用参数匹配器(isA(Class<T>)、anyXxx()、eq())，所有的参数都必须由匹配器提供。。
+        verify(mockSample,never()).publicMethodCalculate(isA(int.class),isA(int.class));
+        verify(mockSample,never()).publicMethodCalculate(anyInt(),anyInt());
+        verify(mockSample,never()).publicMethodCalculate(eq(1),eq(2));
+
+        mockSample.publicMethodCalculate(1,2);
+        verify(mockSample).publicMethodCalculate(1,2);
+        verify(mockSample).publicMethodCalculate(isA(int.class),isA(int.class));
+        verify(mockSample).publicMethodCalculate(anyInt(),anyInt());
+        verify(mockSample).publicMethodCalculate(eq(1),eq(2));
+        verify(mockSample,never()).publicMethodCalculate(1,1);
+        verify(mockSample,never()).publicMethodCalculate(eq(1),eq(1));
+
+        mockSample.publicMethodCalculate(1,2);
+        verify(mockSample,times(2)).publicMethodCalculate(1,2);
+        verify(mockSample,times(2)).publicMethodCalculate(isA(int.class),isA(int.class));
+        verify(mockSample,times(2)).publicMethodCalculate(anyInt(),anyInt());
+        verify(mockSample,times(2)).publicMethodCalculate(eq(1),eq(2));
+        verify(mockSample,never()).publicMethodCalculate(1,1);
+        verify(mockSample,never()).publicMethodCalculate(eq(1),eq(1));
     }
 
     /**
