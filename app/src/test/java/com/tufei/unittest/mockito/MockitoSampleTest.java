@@ -125,6 +125,16 @@ public class MockitoSampleTest {
         verify(mockSample,never()).publicMethodCalculate(eq(1),eq(1));
     }
 
+    @Test
+    public void notMockPublicMethodNoReturnThrowException_mockClass(){
+        mockSample.publicMethodNoReturnThrowException();
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void notMockPublicMethodNoReturnThrowException_spyClass(){
+        spySample.publicMethodNoReturnThrowException();
+    }
+
     /**
      * mock的类得到的实例，调用返回值为String的方法时，如果不mock该方法，
      * 则默认的返回值是null。
