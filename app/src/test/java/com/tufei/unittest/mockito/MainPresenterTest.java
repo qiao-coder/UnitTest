@@ -1,5 +1,11 @@
 package com.tufei.unittest.mockito;
 
+import com.tufei.unittest.mockito.mvp.GetDataCallback;
+import com.tufei.unittest.mockito.mvp.MainContract;
+import com.tufei.unittest.mockito.mvp.MainPresenter;
+import com.tufei.unittest.mockito.mvp.Person;
+import com.tufei.unittest.mockito.mvp.TestRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -20,7 +26,7 @@ import static org.mockito.Mockito.verify;
 public class MainPresenterTest {
 
     @Mock
-    private TestDataSource testDataSource;
+    private TestRepository testRepository;
     @Mock
     private MainContract.View view;
     private MainPresenter mainPresenter;
@@ -32,13 +38,13 @@ public class MainPresenterTest {
      * 只有OnSuccess、OnError两种情况。有时当你面对更多的情况的时候，恐怕只能用回调了。
      */
     @Captor
-    private ArgumentCaptor<TestDataSource.GetDataCallback> getDataCallbackCaptor;
+    private ArgumentCaptor<GetDataCallback> getDataCallbackCaptor;
     private List<Person> peoples;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mainPresenter = new MainPresenter(testDataSource);
+        mainPresenter = new MainPresenter(testRepository);
         mainPresenter.attachView(view);
         peoples = Arrays.asList(new Person("Tony"), new Person("Alice"));
     }
@@ -46,7 +52,7 @@ public class MainPresenterTest {
     @Test
     public void loadData() {
         mainPresenter.loadData();
-        verify(testDataSource, times(1)).getData(getDataCallbackCaptor.capture());
+        verify(testRepository, times(1)).getData(getDataCallbackCaptor.capture());
 
         //验证获取数据成功后的逻辑是否顺利完成
         getDataCallbackCaptor.getValue().onSuccess(peoples);

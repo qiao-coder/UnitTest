@@ -1,4 +1,4 @@
-package com.tufei.unittest.mockito;
+package com.tufei.unittest.mockito.mvp;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ import java.util.List;
 public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View view;
-    private TestDataSource testDataSource;
+    private TestRepository testRepository;
 
-    public MainPresenter(TestDataSource testDataSource) {
-        this.testDataSource = testDataSource;
+    public MainPresenter(TestRepository testRepository) {
+        this.testRepository = testRepository;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     private void getDataAndHandle() {
         //省略一大堆可能的处理逻辑......
-        testDataSource.getData(new TestDataSource.GetDataCallback() {
+        testRepository.getData(new GetDataCallback() {
             @Override
             public void onSuccess(List<Person> peoples) {
                 //省略一大堆可能的处理逻辑......

@@ -1,4 +1,4 @@
-package com.tufei.unittest.mockito;
+package com.tufei.unittest.mockito.mvp;
 
 import java.util.List;
 
