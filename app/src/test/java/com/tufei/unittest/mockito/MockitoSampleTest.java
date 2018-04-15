@@ -126,12 +126,12 @@ public class MockitoSampleTest {
     }
 
     @Test
-    public void notMockPublicMethodNoReturnThrowException_mockClass(){
+    public void mockClass_notMockPublicMethodNoReturnThrowException(){
         mockSample.publicMethodNoReturnThrowException();
     }
 
     @Test(expected = NullPointerException.class)
-    public void notMockPublicMethodNoReturnThrowException_spyClass(){
+    public void spyClass_notMockPublicMethodNoReturnThrowException(){
         spySample.publicMethodNoReturnThrowException();
     }
 
@@ -140,7 +140,7 @@ public class MockitoSampleTest {
      * 则默认的返回值是null。
      */
     @Test
-    public void notMockPublicMethodReturnString_mockClass() {
+    public void spyClass_notMockPublicMethodReturnString_mockClass() {
         String actual = mockSample.publicMethodReturnString();
         assertEquals(null, actual);
     }
@@ -150,7 +150,7 @@ public class MockitoSampleTest {
      * 则默认的返回值是方法运行真实逻辑后返回的值。
      */
     @Test
-    public void notMockPublicMethodReturnString_spyClass() {
+    public void spyClass_notMockPublicMethodReturnString_spyClass() {
         String expected = "publicMethodReturnString";
         String actual = spySample.publicMethodReturnString();
         assertEquals(expected, actual);
@@ -160,7 +160,7 @@ public class MockitoSampleTest {
      * 基本类型：数值类型默认返回0。boolean类型默认返回false。
      */
     @Test
-    public void notMockPublicMethodReturnInt_mockClass() {
+    public void mockClass_notMockPublicMethodReturnInt() {
         int actual = mockSample.publicMethodReturnInt();
         assertEquals(0, actual);
     }
@@ -169,7 +169,7 @@ public class MockitoSampleTest {
      * 返回方法执行后的实际返回值。
      */
     @Test
-    public void notMockPublicMethodReturnInt_spyClass() {
+    public void spyClass_notMockPublicMethodReturnInt() {
         int actual = spySample.publicMethodReturnInt();
         assertEquals(999, actual);
     }
@@ -178,7 +178,7 @@ public class MockitoSampleTest {
      * Object：默认返回null。
      */
     @Test
-    public void notMockPublicMethodReturnObject_mockClass() {
+    public void mockClass_notMockPublicMethodReturnObject() {
         MockitoSample.DataBean actual = mockSample.publicMethodReturnObject();
         assertEquals(null, actual);
     }
@@ -187,7 +187,7 @@ public class MockitoSampleTest {
      * 返回方法执行后的实际返回值。
      */
     @Test
-    public void notMockPublicMethodReturnObject_spyClass() {
+    public void spyClass_notMockPublicMethodReturnObject() {
         MockitoSample.DataBean actual = spySample.publicMethodReturnObject();
         assertEquals(new MockitoSample.DataBean(), actual);
     }
@@ -196,7 +196,7 @@ public class MockitoSampleTest {
      * 集合：默认返回空集合，并非null
      */
     @Test
-    public void notMockPublicMethodReturnList_mockClass() {
+    public void mockClass_notMockPublicMethodReturnList() {
         List<Integer> actual = mockSample.publicMethodReturnList();
         assertEquals(new ArrayList<Integer>(), actual);
     }
@@ -205,7 +205,7 @@ public class MockitoSampleTest {
      * 返回方法执行后的实际返回值。
      */
     @Test
-    public void notMockPublicMethodReturnList_spyClass() {
+    public void spyClass_notMockPublicMethodReturnList() {
         List<Integer> actual = spySample.publicMethodReturnList();
         assertEquals(Collections.singletonList(1), actual);
     }
@@ -214,7 +214,7 @@ public class MockitoSampleTest {
      * 数组：默认返回null
      */
     @Test
-    public void notMockPublicMethodReturnArray_mockClass() {
+    public void mockClass_notMockPublicMethodReturnArray() {
         int[] actual = mockSample.publicMethodReturnArray();
         assertArrayEquals(null, actual);
     }
@@ -223,7 +223,7 @@ public class MockitoSampleTest {
      * 返回方法执行后的实际返回值。
      */
     @Test
-    public void notMockPublicMethodReturnArray_spyClass() {
+    public void spyClass_notMockPublicMethodReturnArray() {
         int[] actual = spySample.publicMethodReturnArray();
         assertArrayEquals(new int[]{1}, actual);
     }
@@ -232,9 +232,17 @@ public class MockitoSampleTest {
      * 使用mock时，调用when...thenReturn...不会走真实逻辑。
      */
     @Test
-    public void mockPublicMethodReturnStringButThrowException_when_thenReturn() {
+    public void mockClass_mockPublicMethodReturnStringButThrowException_when_thenReturn() {
         String expected = "test";
         when(mockSample.publicMethodReturnStringButThrowException()).thenReturn(expected);
+        String actual = mockSample.publicMethodReturnStringButThrowException();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void mockClass_mockPublicMethodReturnStringButThrowException_do_thenReturn() {
+        String expected = "test";
+        doReturn(expected).when(mockSample).publicMethodReturnStringButThrowException();
         String actual = mockSample.publicMethodReturnStringButThrowException();
         assertEquals(expected, actual);
     }
@@ -243,7 +251,7 @@ public class MockitoSampleTest {
      * 使用spy时，调用when...thenReturn...会走真实逻辑。
      */
     @Test(expected = NullPointerException.class)
-    public void spyPublicMethodReturnStringButThrowException_when_thenReturn() {
+    public void spyClass_mockPublicMethodReturnStringButThrowException_when_thenReturn() {
         when(spySample.publicMethodReturnStringButThrowException()).thenReturn("test");
         mockSample.publicMethodReturnStringButThrowException();
     }
@@ -254,7 +262,7 @@ public class MockitoSampleTest {
      * 看源码即可知道。
      */
     @Test(expected = NullPointerException.class)
-    public void spyObject_spyPublicMethodReturnStringButThrowException_when_thenReturn() {
+    public void spyObject_mockPublicMethodReturnStringButThrowException_when_thenReturn() {
         MockitoSample mockitoSample = new MockitoSample();
         MockitoSample spy = spy(mockitoSample);
         when(spy.publicMethodReturnStringButThrowException()).thenReturn("test");
