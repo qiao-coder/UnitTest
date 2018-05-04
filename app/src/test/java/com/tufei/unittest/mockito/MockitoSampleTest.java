@@ -238,7 +238,8 @@ public class MockitoSampleTest {
     }
 
     /**
-     * 经由{@link Mockito#mock(Class)}产生的实例，调用when...thenReturn...不会走真实逻辑。
+     * 经由{@link Mockito#mock(Class)}产生的实例，调用when...thenReturn...来mock一个方法。
+     * 调用该方法时不会走真实逻辑。
      */
     @Test
     public void mockClass_mockPublicMethodReturnStringButThrowException_when_thenReturn() {
@@ -249,7 +250,8 @@ public class MockitoSampleTest {
     }
 
     /**
-     * 经由{@link Mockito#mock(Class)}产生的实例，调用doReturn...when...不会走真实逻辑。
+     * 经由{@link Mockito#mock(Class)}产生的实例，调用doReturn...when...来mock一个方法。
+     * 调用该方法时，不会走真实逻辑。
      */
     @Test
     public void mockClass_mockPublicMethodReturnStringButThrowException_do_thenReturn() {
@@ -260,7 +262,8 @@ public class MockitoSampleTest {
     }
 
     /**
-     * 经由{@link Mockito#spy(Class)}产生的实例，调用when...thenReturn...会走真实逻辑。
+     * 经由{@link Mockito#spy(Class)}产生的实例，调用when...thenReturn...来mock一个方法。
+     * 调用该方法时，会走真实逻辑。
      */
     @Test(expected = NullPointerException.class)
     public void spyClass_mockPublicMethodReturnStringButThrowException_when_thenReturn() {
@@ -269,7 +272,8 @@ public class MockitoSampleTest {
     }
 
     /**
-     * 经由{@link Mockito#spy(Class)}产生的实例，调用doReturn...when...不会走真实逻辑。
+     * 经由{@link Mockito#spy(Class)}产生的实例，调用doReturn...when...来mock一个方法。
+     * 调用该方法时，不会走真实逻辑。
      */
     @Test
     public void spyClass_mockPublicMethodReturnStringButThrowException_doReturn_when() {
@@ -280,9 +284,9 @@ public class MockitoSampleTest {
     }
 
     /**
-     * 经由{@link Mockito#spy(Object)}产生的实例，调用when...thenReturn...会走真实逻辑。spy(Object),其实就是通过
-     * Object的getClass方法，来获取到其Class实例。跟spy(Class<T>)一样没有什么实际区别。
-     * 看源码即可知道。
+     * 经由{@link Mockito#spy(Object)}产生的实例，调用when...thenReturn...来mock一个方法。
+     * 调用该方法时，会走真实逻辑。spy(Object),其实就是通过Object的getClass方法，来获取到
+     * 其Class实例。跟spy(Class<T>)一样没有什么实际区别。看源码即可知道。
      */
     @Test(expected = NullPointerException.class)
     public void spyObject_mockPublicMethodReturnStringButThrowException_when_thenReturn() {
