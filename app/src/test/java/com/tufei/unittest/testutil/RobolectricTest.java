@@ -2,6 +2,7 @@ package com.tufei.unittest.testutil;
 
 import android.app.Application;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -19,6 +20,7 @@ import org.robolectric.annotation.Config;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(application = Application.class)
+@Ignore
 public class RobolectricTest {
     @Rule
     public RobolectricRule mRobolectricRule;

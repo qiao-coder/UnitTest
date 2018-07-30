@@ -18,6 +18,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -45,12 +46,22 @@ public class MockitoSampleTest {
     }
 
     /**
-     * mock无返回值的方法:doNothing...when...
+     * mock返回值为void的方法:doNothing...when...
      */
     @Test
     public void mockPublicMethodNoReturnThrowException_doNothing_when() {
-        //无返回值没有对应的when...thenReturn...
+        //when...thenReturn...没有对应的方法。也不能mock返回值为void的方法。
         doNothing().when(mockSample).publicMethodNoReturnThrowException();
+        mockSample.publicMethodNoReturnThrowException();
+    }
+
+    /**
+     * mock返回值为void的方法:doThrow...when...
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void mockPublicMethodNoReturnThrowException_doThrow_when() {
+        //when...thenReturn...有对应的方法。但也不能mock返回值为void的方法。
+        doThrow(IllegalArgumentException.class).when(mockSample).publicMethodNoReturnThrowException();
         mockSample.publicMethodNoReturnThrowException();
     }
 
