@@ -58,7 +58,7 @@ public class PowerMockSample {
         return "privateStaticMethodReturnString";
     }
 
-    private static int privateStaticMethodCalculate(int a, int b) {
+    private static int privateStaticMethodCalculateThrowException(int a, int b) {
         if (true) {
             throw new NullPointerException();
         }
@@ -155,7 +155,7 @@ public class PowerMockSample {
     }
 
     public static int callPrivateStaticMethodCalculate(int a, int b) {
-        return privateStaticMethodCalculate(a, b);
+        return privateStaticMethodCalculateThrowException(a, b);
     }
 
     public void callPrivateMethodNoReturnThrowException() {

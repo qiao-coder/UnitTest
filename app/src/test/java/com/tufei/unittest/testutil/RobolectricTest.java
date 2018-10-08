@@ -2,11 +2,13 @@ package com.tufei.unittest.testutil;
 
 import android.app.Application;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowLog;
 
 /**
  * 基类。当需要使用robolectric测试时，继承该类即可。
@@ -23,5 +25,5 @@ import org.robolectric.annotation.Config;
 @Ignore
 public class RobolectricTest {
     @Rule
-    public RobolectricRule mRobolectricRule;
+    public RobolectricRule mRobolectricRule = new RobolectricRule();
 }

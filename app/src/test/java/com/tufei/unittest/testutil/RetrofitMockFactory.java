@@ -1,15 +1,9 @@
-package com.tufei.unittest.robolectric;
+package com.tufei.unittest.testutil;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tufei.unittest.net.GithubRepository;
 import com.tufei.unittest.net.HttpService;
 import com.tufei.unittest.net.NetConstants;
-import com.tufei.unittest.net.UserBean;
-import com.tufei.unittest.testutil.MockInterceptor;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,16 +14,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * @author tufei
- * @date 2018/3/11.
+ * @author TuFei
+ * @date 18-8-28.
  */
-
-public class NetMockTest {
-
-    private GithubRepository mGithubRepository;
-
-    @Before
-    public void setup() {
+public class RetrofitMockFactory {
+    public static HttpService createHttpService() {
         MockInterceptor mockInterceptor = new MockInterceptor("user.json");
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -48,22 +37,6 @@ public class NetMockTest {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        HttpService httpService = retrofit.create(HttpService.class);
-
-        mGithubRepository = new GithubRepository(httpService);
-    }
-
-    @Test
-    public void getUser() {
-        mGithubRepository.getUser()
-                .test()
-                .assertNoErrors()
-                .assertComplete()
-        .assertValue(new io.reactivex.functions.Predicate<UserBean>() {
-            @Override
-            public boolean test(UserBean userBean) throws Exception {
-                return userBean.getLogin().equals("TuFeiBaBa");
-            }
-        });
+        return retrofit.create(HttpService.class);
     }
 }

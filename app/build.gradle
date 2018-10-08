@@ -70,15 +70,19 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:3.7.1"
+
 
     //room
     implementation "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     implementation "android.arch.persistence.room:rxjava2:1.0.0"
+
+    testImplementation 'junit:junit:4.12'
+
+    //robolectric
+    testImplementation "org.robolectric:robolectric:3.7.1"
     //测试room时，记得添加
-    testImplementation "android.arch.core:core-testing:1.1.0"
+    testImplementation "android.arch.core:core-testing:1.1.1"
 
     //mockito
     testImplementation "org.mockito:mockito-core:2.8.47"
@@ -87,4 +91,7 @@ dependencies {
     testImplementation "org.powermock:powermock-core:1.7.3"
     testImplementation "org.powermock:powermock-module-junit4:1.7.3"
     testImplementation "org.powermock:powermock-api-mockito2:1.7.3"
+    //powermock和robolectric一起使用时
+    testImplementation "org.powermock:powermock-module-junit4-rule:1.7.3"
+    testImplementation "org.powermock:powermock-classloading-xstream:1.7.3"
 }

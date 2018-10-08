@@ -22,7 +22,6 @@ public class MockInterceptor implements Interceptor {
     private String fileName;
 
     public MockInterceptor(String fileName) {
-
         this.fileName = fileName;
     }
 
@@ -34,7 +33,7 @@ public class MockInterceptor implements Interceptor {
                 .code(200)
                 .message(inputStream.toString())
                 .request(chain.request())
-                .protocol(Protocol.HTTP_1_0)
+                .protocol(Protocol.HTTP_1_1)
                 .body(ResponseBody.create(MediaType.parse("application/json"), source.readString(StandardCharsets.UTF_8).getBytes()))
                 .addHeader("content-type", "application/json")
                 .build();

@@ -1,4 +1,4 @@
-package com.tufei.unittest.robolectric;
+package com.tufei.unittest.combat_exercise;
 
 import com.tufei.unittest.net.GithubRepository;
 import com.tufei.unittest.net.HttpService;
@@ -12,7 +12,7 @@ import org.junit.Test;
  * @date 2018/3/10.
  */
 
-public class NetWithoutRobolectricTest {
+public class NetworkTest {
 
     private GithubRepository mGithubRepository;
 

@@ -33,179 +33,147 @@ public class PowerMockSampleTest {
 
     @Test
     public void mockPrivateInt() {
-        //这里用的是spy。主要是因为想要调用PowerMockSample里特意暴露的
-        //getPrivateInt方法的真实逻辑，获得修改过后的真实值。
-        //PowerMockSample mock = PowerMockito.powerMockSample(PowerMockSample.class);
-        //不用PowerMockito的spy(Object)方法，是因为这个方法跟Mockito的不一样，是没有返回值的。
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
-
         int newValue = 2;
         //mock非静态变量，第一个参数传的是实例。
         //不管mock的是private变量还是public变量，第二个参数传的都是变量名。
-        Whitebox.setInternalState(spy, "privateInt", newValue);
-
-        assertEquals(newValue, spy.getPrivateInt());
+        Whitebox.setInternalState(powerMockSample, "privateInt", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "privateInt", powerMockSample));
+        assertEquals(newValue, powerMockSample.getPrivateInt());
     }
 
     @Test
     public void mockPrivateString() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
-
         String newValue = "mockPrivateString";
-
         //mock非静态变量，第一个参数传的是实例
-        Whitebox.setInternalState(spy, "privateString", newValue);
-
-        assertEquals(newValue, spy.getPrivateString());
+        Whitebox.setInternalState(powerMockSample, "privateString", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "privateString", powerMockSample));
+        assertEquals(newValue, powerMockSample.getPrivateString());
     }
 
     @Test
     public void mockPrivateInteger() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
-
         Integer newValue = 2;
-
         //mock非静态变量，第一个参数传的是实例
-        Whitebox.setInternalState(spy, "privateInteger", newValue);
-
-        assertEquals(newValue, spy.getPrivateInteger());
+        Whitebox.setInternalState(powerMockSample, "privateInteger", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "privateInteger", powerMockSample));
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "privateInteger", powerMockSample));
     }
 
     @Test
     public void mockPrivateFinalInt() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
-
         int newValue = 2;
-
-        Whitebox.setInternalState(spy, "privateFinalInt", newValue);
-
-        //mock失败
-        assertNotEquals(newValue, spy.getPrivateFinalInt());
+        Whitebox.setInternalState(powerMockSample, "privateFinalInt", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "privateFinalInt", powerMockSample));
+        //注意，这里并不相等
+        assertNotEquals(newValue, powerMockSample.getPrivateFinalInt());
     }
 
     @Test
     public void mockPrivateFinalString() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
-
         String newValue = "mockPrivateFinalString";
-
-        Whitebox.setInternalState(spy, "privateFinalString", newValue);
-
-        //mock失败
-        assertNotEquals(newValue, spy.getPrivateFinalString());
+        Whitebox.setInternalState(powerMockSample, "privateFinalString", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "privateFinalString", powerMockSample));
+        //注意，这里并不相等
+        assertNotEquals(newValue, powerMockSample.getPrivateFinalString());
     }
 
     @Test
     public void mockPrivateFinalInteger() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
-
         Integer newValue = 2;
-
-        Whitebox.setInternalState(spy, "privateFinalInteger", newValue);
-
-        assertEquals(newValue, spy.getPrivateFinalInteger());
+        Whitebox.setInternalState(powerMockSample, "privateFinalInteger", newValue);
+        assertEquals(newValue, powerMockSample.getPrivateFinalInteger());
+        assertEquals(newValue, powerMockSample.getPrivateFinalInteger());
     }
 
 
     @Test
     public void mockPrivateStaticInt() {
         int newValue = 2;
-
         //mock静态变量，第一个参数传的是class
         Whitebox.setInternalState(PowerMockSample.class, "privateStaticInt", newValue);
-
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "privateStaticInt"));
         assertEquals(newValue, PowerMockSample.getPrivateStaticInt());
     }
 
     @Test
     public void mockPrivateStaticString() {
         String newValue = "mockPrivateStaticString";
-
         //mock静态变量，第一个参数传的是class
         Whitebox.setInternalState(PowerMockSample.class, "privateStaticString", newValue);
-
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "privateStaticString"));
         assertEquals(newValue, PowerMockSample.getPrivateStaticString());
     }
 
     @Test
     public void mockPrivateStaticInteger() {
         Integer newValue = 2;
-
         //mock静态变量，第一个参数传的是class
         Whitebox.setInternalState(PowerMockSample.class, "privateStaticInteger", newValue);
-
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "privateStaticInteger"));
         assertEquals(newValue, PowerMockSample.getPrivateStaticInteger());
     }
 
     @Test
     public void mockPrivateStaticFinalInt() {
         int newValue = 2;
-
         //mock静态变量，第一个参数传的是class
         Whitebox.setInternalState(PowerMockSample.class, "privateStaticFinalInt", newValue);
-
-        //mock失败
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "privateStaticFinalInt"));
+        //注意，这里并不相等
         assertNotEquals(newValue, PowerMockSample.getPrivateStaticFinalInt());
     }
 
     @Test
     public void mockPrivateStaticFinalString() {
         String newValue = "mockPrivateStaticFinalString";
-
         //mock静态变量，第一个参数传的是class
         Whitebox.setInternalState(PowerMockSample.class, "privateStaticFinalString", newValue);
-
-        //mock失败
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "privateStaticFinalString"));
+        //注意，这里并不相等
         assertNotEquals(newValue, PowerMockSample.getPrivateStaticFinalString());
     }
 
     @Test
     public void mockPrivateStaticFinalInteger() {
         int newValue = 2;
-
         //mock静态变量，第一个参数传的是class
         Whitebox.setInternalState(PowerMockSample.class, "privateStaticFinalInteger", newValue);
-
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "privateStaticFinalInteger"));
         assertEquals(newValue, PowerMockSample.getPrivateStaticFinalInteger());
     }
 
     @Test
     public void mockPublicInt() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
         int newValue = 2;
-
         //mock非静态变量，第一个参数传的是实例
-        Whitebox.setInternalState(spy, "publicInt", newValue);
-
-        assertEquals(newValue, spy.publicInt);
+        Whitebox.setInternalState(powerMockSample, "publicInt", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "publicInt", powerMockSample));
+        assertEquals(newValue, powerMockSample.publicInt);
     }
 
     @Test
     public void mockPublicString() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
         String newValue = "publicString";
-
         //mock非静态变量，第一个参数传的是实例
-        Whitebox.setInternalState(spy, "publicString", newValue);
-
-        assertEquals(newValue, spy.publicString);
+        Whitebox.setInternalState(powerMockSample, "publicString", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "publicString", powerMockSample));
+        assertEquals(newValue, powerMockSample.publicString);
     }
 
     @Test
     public void mockPublicInteger() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
         Integer newValue = 2;
-
         //mock非静态变量，第一个参数传的是实例
-        Whitebox.setInternalState(spy, "publicInteger", newValue);
-
-        assertEquals(newValue, spy.publicInteger);
+        Whitebox.setInternalState(powerMockSample, "publicInteger", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "publicInteger", powerMockSample));
+        assertEquals(newValue, powerMockSample.publicInteger);
     }
 
     @Test
     public void mockPublicStaticInt() {
         int newValue = 2;
         Whitebox.setInternalState(PowerMockSample.class, "publicStaticInt", newValue);
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "publicStaticInt"));
         assertEquals(newValue, PowerMockSample.publicStaticInt);
     }
 
@@ -213,6 +181,7 @@ public class PowerMockSampleTest {
     public void mockPublicStaticString() {
         String newValue = "publicStaticString";
         Whitebox.setInternalState(PowerMockSample.class, "publicStaticString", newValue);
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "publicStaticString"));
         assertEquals(newValue, PowerMockSample.publicStaticString);
     }
 
@@ -220,67 +189,99 @@ public class PowerMockSampleTest {
     public void mockPublicStaticInteger() {
         Integer newValue = 2;
         Whitebox.setInternalState(PowerMockSample.class, "publicStaticInteger", newValue);
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "publicStaticInteger"));
         assertEquals(newValue, PowerMockSample.publicStaticInteger);
     }
 
     @Test
     public void mockPublicFinalInt() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
         int newValue = 2;
-        Whitebox.setInternalState(spy, "publicFinalInt", newValue);
-        assertNotEquals(newValue, spy.publicFinalInt);
+        Whitebox.setInternalState(powerMockSample, "publicFinalInt", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "publicFinalInt", powerMockSample));
+        //注意，这里并不相等
+        assertNotEquals(newValue, powerMockSample.publicFinalInt);
     }
 
     @Test
     public void mockPublicFinalString() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
         String newValue = "newPublicFinalString";
-        Whitebox.setInternalState(spy, "publicFinalString", newValue);
-        assertNotEquals(newValue, spy.publicFinalString);
+        Whitebox.setInternalState(powerMockSample, "publicFinalString", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "publicFinalString", powerMockSample));
+        //注意，这里并不相等
+        assertNotEquals(newValue, powerMockSample.publicFinalString);
     }
 
     @Test
     public void mockPublicFinalInteger() {
-        PowerMockSample spy = PowerMockito.spy(new PowerMockSample());
         Integer newValue = 2;
-        Whitebox.setInternalState(spy, "publicFinalInteger", newValue);
-        //mock成功
-        assertEquals(newValue, spy.publicFinalInteger);
+        Whitebox.setInternalState(powerMockSample, "publicFinalInteger", newValue);
+        assertEquals(newValue, getFieldValue(PowerMockSample.class, "publicFinalInteger", powerMockSample));
+        assertEquals(newValue, powerMockSample.publicFinalInteger);
     }
 
     @Test
     public void mockPublicStaticFinalInt() {
         int newValue = 2;
-
         Whitebox.setInternalState(PowerMockSample.class, "publicStaticFinalInt", newValue);
-
-        //mock失败
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "publicStaticFinalInt"));
+        //注意，这里并不相等
         assertNotEquals(newValue, PowerMockSample.publicStaticFinalInt);
     }
 
     @Test
     public void mockPublicStaticFinalString() {
         String newValue = "mockPublicStaticFinalString";
-
         //第一个参数，传的是class
         Whitebox.setInternalState(PowerMockSample.class, "publicStaticFinalString", newValue);
-
-        //mock失败
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "publicStaticFinalString"));
+        //注意，这里并不相等
         assertNotEquals(newValue, PowerMockSample.publicStaticFinalString);
     }
 
     @Test
     public void mockPublicStaticFinalInteger() {
         Integer newValue = 2;
-
         //第一个参数，传的是class
         Whitebox.setInternalState(PowerMockSample.class, "publicStaticFinalInteger", newValue);
-
+        assertEquals(newValue, getStaticFieldValue(PowerMockSample.class, "publicStaticFinalInteger"));
         assertEquals(newValue, PowerMockSample.publicStaticFinalInteger);
     }
 
     @Test
-    public void mockPrivateMethodCalculateThrowException() throws Exception {
+    public void spyObject_mockPrivateMethodReturnString() throws Exception {
+        String oleValue = "privateMethodReturnString";
+        String newValue = "mockPrivateMethodReturnString";
+
+        //不行，该方法是没有返回值的。它其实是用来mock静态方法的。它被称之为spyStatic更适合。
+        //PowerMockito.spy(PowerMockSample.class);
+        powerMockSample = PowerMockito.spy(powerMockSample);
+        String actual_1 = Whitebox.invokeMethod(powerMockSample, "privateMethodReturnString");
+        assertEquals(oleValue, actual_1);
+        //不妥。在返回newValue之前，会先走真实逻辑。
+        //when(powerMockSample, "privateMethodReturnString").thenReturn(newValue);
+        doReturn(newValue).when(powerMockSample, "privateMethodReturnString");
+        String actual_2 = Whitebox.invokeMethod(powerMockSample, "privateMethodReturnString");
+        assertEquals(newValue, actual_2);
+    }
+
+    @Test
+    public void spyObject_mockPrivateMethodNoReturnThrowException() throws Exception {
+        powerMockSample = PowerMockito.spy(powerMockSample);
+
+        try {
+            Whitebox.invokeMethod(powerMockSample, "privateMethodNoReturnThrowException");
+        } catch (Exception e) {
+            assertEquals(NullPointerException.class, e.getClass());
+        }
+
+        //传的是mock过的实例
+        doNothing().when(powerMockSample, "privateMethodNoReturnThrowException");
+
+        Whitebox.invokeMethod(powerMockSample, "privateMethodNoReturnThrowException");
+    }
+
+    @Test
+    public void spyObject_mockPrivateMethodCalculateThrowException() throws Exception {
         int expected = 10;
 
         powerMockSample = PowerMockito.spy(powerMockSample);
@@ -289,73 +290,71 @@ public class PowerMockSampleTest {
         //doReturn方法的注释，也提供了相关解释和例子。
 //        when(powerMockSample, "privateMethodCalculateThrowException", isA(int.class), isA(int.class)).thenReturn(expected);
         doReturn(expected).when(powerMockSample, "privateMethodCalculateThrowException", isA(int.class), isA(int.class));
-
-        assertEquals(expected, powerMockSample.callPrivateMethodCalculateThrowException(1, 2));
+        int actual = Whitebox.invokeMethod(powerMockSample, "privateMethodCalculateThrowException", 1, 2);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void mockPrivateMethodCalculate() throws Exception {
+    public void mockClass_mockPrivateMethodCalculateThrowException() throws Exception {
         int expected = 10;
+        powerMockSample = PowerMockito.mock(PowerMockSample.class);
+        //两者均可
+//        when(powerMockSample,"privateMethodCalculateThrowException", isA(int.class), isA(int.class)).thenReturn(expected);
+        doReturn(expected).when(powerMockSample, "privateMethodCalculateThrowException", isA(int.class), isA(int.class));
+        int actual = Whitebox.invokeMethod(powerMockSample, "privateMethodCalculateThrowException", 1, 2);
+        assertEquals(expected, actual);
+    }
 
+    @Test
+    public void spyObject_mockPrivateMethodCalculate() throws Exception {
+        int expected = 10;
         powerMockSample = PowerMockito.spy(powerMockSample);
-
-        assertEquals(3, powerMockSample.callPrivateMethodCalculate(1, 2));
-
+        int actual_1 = Whitebox.invokeMethod(powerMockSample, "privateMethodCalculate", 1, 2);
+        assertEquals(3, actual_1);
         doReturn(expected).when(powerMockSample, "privateMethodCalculate", isA(int.class), isA(int.class));
-
-        assertEquals(expected, powerMockSample.callPrivateMethodCalculate(1, 2));
+        int actual_2 = Whitebox.invokeMethod(powerMockSample, "privateMethodCalculate", 1, 2);
+        assertEquals(expected, actual_2);
     }
 
     @Test
-    public void mockPrivateMethodReturnString() throws Exception {
-        String oleValue = "privateMethodReturnString";
-        String newValue = "mockPrivateMethodReturnString";
-
-        //不行，该方法没有返回值。而且在doReturn时，会报空指针。
-        //PowerMockito.spy(PowerMockSample.class);
-        powerMockSample = PowerMockito.spy(powerMockSample);
-
-        assertEquals(oleValue, powerMockSample.callPrivateMethodReturnString());
-
-        //也可以
-        //when(powerMockSample, "privateMethodReturnString").thenReturn(newValue);
-        doReturn(newValue).when(powerMockSample, "privateMethodReturnString");
-
-        assertEquals(newValue, powerMockSample.callPrivateMethodReturnString());
-    }
-
-    @Test
-    public void mockPrivateStaticMethodReturnString() throws Exception {
+    public void spyClass_mockPrivateStaticMethodReturnString() throws Exception {
         String oldValue = "privateStaticMethodReturnString";
         String newValue = "mockPrivateStaticMethodReturnString";
 
         PowerMockito.spy(PowerMockSample.class);
-
-        assertEquals(oldValue, PowerMockSample.callPrivateStaticMethodReturnString());
+        String actual_1 = Whitebox.invokeMethod(powerMockSample, "privateStaticMethodReturnString");
+        assertEquals(oldValue, actual_1);
 
         //传的是mock过的class
         doReturn(newValue).when(PowerMockSample.class, "privateStaticMethodReturnString");
-
-        assertEquals(newValue, PowerMockSample.callPrivateStaticMethodReturnString());
+        String actual_2 = Whitebox.invokeMethod(powerMockSample, "privateStaticMethodReturnString");
+        assertEquals(newValue, actual_2);
     }
 
     @Test
-    public void mockPrivateStaticMethodCalculate() throws Exception {
+    public void spyClass_mockPrivateStaticMethodCalculateThrowException() throws Exception {
         int expected = 10;
-
         PowerMockito.spy(PowerMockSample.class);
-
-//        assertEquals(3, PowerMockSample.callPrivateStaticMethodCalculate(1, 2));
-
-        //传的是mock过的class
-        doReturn(expected).when(PowerMockSample.class, "privateStaticMethodCalculate", isA(int.class), isA(int.class));
         //不可行，还是会走实践逻辑
-//        when(PowerMockSample.class, "privateStaticMethodCalculate", isA(int.class), isA(int.class)).thenReturn(expected);
-        assertEquals(expected, PowerMockSample.callPrivateStaticMethodCalculate(1, 2));
+//        when(PowerMockSample.class, "privateStaticMethodCalculateThrowException", isA(int.class), isA(int.class)).thenReturn(expected);
+        doReturn(expected).when(PowerMockSample.class, "privateStaticMethodCalculateThrowException", isA(int.class), isA(int.class));
+        int actual = Whitebox.invokeMethod(PowerMockSample.class, "privateStaticMethodCalculateThrowException", 1, 2);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void mockPublicStaticMethodReturnStringButThrowException() {
+    public void mockStatic_mockPrivateStaticMethodCalculateThrowException() throws Exception {
+        int expected = 10;
+        PowerMockito.mockStatic(PowerMockSample.class);
+        //两者均可。均不会走真实逻辑。
+//        when(PowerMockSample.class, "privateStaticMethodCalculateThrowException", isA(int.class), isA(int.class)).thenReturn(expected);
+        doReturn(expected).when(PowerMockSample.class, "privateStaticMethodCalculateThrowException", isA(int.class), isA(int.class));
+        int actual = Whitebox.invokeMethod(PowerMockSample.class, "privateStaticMethodCalculateThrowException", 1, 2);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void mockStatic_mockPublicStaticMethodReturnStringButThrowException() {
         String newValue = "mockPublicStaticMethodReturnStringButThrowException";
 
         PowerMockito.mockStatic(PowerMockSample.class);
@@ -363,16 +362,14 @@ public class PowerMockSampleTest {
         //没有抛异常，所以没有走真实逻辑。返回了null。
         assertEquals(null, PowerMockSample.publicStaticMethodReturnStringButThrowException());
 
-        //传的是mock过的class
         when(PowerMockSample.publicStaticMethodReturnStringButThrowException()).thenReturn(newValue);
         //public static方法，不能用doReturn。会抛UnfinishedStubbingException异常。
 //        doReturn(newValue).when(PowerMockSample.publicStaticMethodReturnStringButThrowException());
-
         assertEquals(newValue, PowerMockSample.publicStaticMethodReturnStringButThrowException());
     }
 
     @Test
-    public void mockPublicStaticMethodCalculate() {
+    public void spyClass_mockPublicStaticMethodCalculate() throws Exception {
         int expected = 10;
 
         PowerMockito.spy(PowerMockSample.class);
@@ -380,48 +377,31 @@ public class PowerMockSampleTest {
         //会走真实逻辑。
         assertEquals(3, PowerMockSample.publicStaticMethodCalculate(1, 2));
 
-        //传的是mock过的class
-        when(PowerMockSample.publicStaticMethodCalculate(isA(int.class), isA(int.class))).thenReturn(expected);
+//        when(PowerMockSample.publicStaticMethodCalculate(isA(int.class), isA(int.class))).thenReturn(expected);
+        //不妥，会先走一遍真实逻辑
+//        when(PowerMockSample.class,"publicStaticMethodCalculate",isA(int.class),isA(int.class)).thenReturn(expected);
         //会抛UnfinishedStubbingException异常。
 //        doReturn(expected).when(PowerMockSample.publicStaticMethodCalculate(isA(int.class),isA(int.class)));
-
+        doReturn(expected).when(PowerMockSample.class, "publicStaticMethodCalculate", isA(int.class), isA(int.class));
         assertEquals(expected, PowerMockSample.publicStaticMethodCalculate(1, 2));
     }
 
     @Test
-    public void mockPrivateMethodNoReturnThrowException() throws Exception {
-        powerMockSample = PowerMockito.spy(powerMockSample);
-
-        try {
-            powerMockSample.callPrivateMethodNoReturnThrowException();
-        } catch (Exception e) {
-            assertEquals(NullPointerException.class, e.getClass());
-        }
-
-        //传的是mock过的实例
-        doNothing().when(powerMockSample, "privateMethodNoReturnThrowException");
-
-        powerMockSample.callPrivateMethodNoReturnThrowException();
-    }
-
-    @Test
-    public void mockPrivateStaticMethodNoReturnThrowException() throws Exception {
+    public void spyClass_mockPrivateStaticMethodNoReturnThrowException() throws Exception {
         PowerMockito.spy(PowerMockSample.class);
 
         try {
-            PowerMockSample.callPrivateStaticMethodNoReturnThrowException();
+            Whitebox.invokeMethod(PowerMockSample.class, "privateStaticMethodNoReturnThrowException");
         } catch (Exception e) {
             assertEquals(NullPointerException.class, e.getClass());
         }
 
-        //传的是mock过的class
         doNothing().when(PowerMockSample.class, "privateStaticMethodNoReturnThrowException");
-
-        PowerMockSample.callPrivateStaticMethodNoReturnThrowException();
+        Whitebox.invokeMethod(PowerMockSample.class, "privateStaticMethodNoReturnThrowException");
     }
 
     @Test
-    public void mockPublicStaticMethodNoReturnThrowException() throws Exception {
+    public void spyClass_mockPublicStaticMethodNoReturnThrowException() throws Exception {
         PowerMockito.spy(PowerMockSample.class);
 
         try {
@@ -435,5 +415,13 @@ public class PowerMockSampleTest {
         doNothing().when(PowerMockSample.class, "publicStaticMethodNoReturnThrowException");
 
         PowerMockSample.publicStaticMethodNoReturnThrowException();
+    }
+
+    private Object getStaticFieldValue(Class<?> clazz, String fieldName) {
+        return Whitebox.getFieldValue(Whitebox.getField(clazz, fieldName), clazz);
+    }
+
+    private Object getFieldValue(Class<?> clazz, String fieldName, Object object) {
+        return Whitebox.getFieldValue(Whitebox.getField(clazz, fieldName), object);
     }
 }
