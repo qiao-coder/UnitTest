@@ -7,7 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.tufei.unittest.di.ActivityComponent;
+import com.tufei.unittest.di.DaggerActivityComponent;
+
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
+
+    @Inject
+    public MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +32,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+       ActivityComponent activityComponent = DaggerActivityComponent.builder()
+               .appComponent(ComponentHolder.getAppComponent())
+                .build();
+       activityComponent.inject(this);
+
+       presenter.println();
     }
 }
