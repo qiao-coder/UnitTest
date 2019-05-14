@@ -24,7 +24,7 @@ import org.robolectric.annotation.Config;
 public class NotInitYourApplicationTest {
 
     @Rule
-    public RobolectricRule mRobolectricRule;
+    public RobolectricRule mRobolectricRule = new RobolectricRule();
 
     @Test
     public void test() {
