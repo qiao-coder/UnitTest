@@ -1,6 +1,6 @@
 package com.tufei.unittest.db;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 
 /**
  * @author tufei

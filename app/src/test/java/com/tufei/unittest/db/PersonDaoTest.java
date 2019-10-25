@@ -1,7 +1,7 @@
 package com.tufei.unittest.db;
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.persistence.room.Room;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.room.Room;
 
 import com.tufei.unittest.testutil.RobolectricTest;
 

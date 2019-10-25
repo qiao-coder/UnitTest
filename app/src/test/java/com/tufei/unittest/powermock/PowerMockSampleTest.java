@@ -1,13 +1,16 @@
 package com.tufei.unittest.powermock;
 
-import com.tufei.unittest.PowerMockRunner;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
+import org.powermock.reflect.internal.WhiteboxImpl;
+
+import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -418,10 +421,26 @@ public class PowerMockSampleTest {
     }
 
     private Object getStaticFieldValue(Class<?> clazz, String fieldName) {
-        return Whitebox.getFieldValue(Whitebox.getField(clazz, fieldName), clazz);
+        return getFieldValue(Whitebox.getField(clazz, fieldName), clazz);
     }
 
     private Object getFieldValue(Class<?> clazz, String fieldName, Object object) {
-        return Whitebox.getFieldValue(Whitebox.getField(clazz, fieldName), object);
+        return getFieldValue(Whitebox.getField(clazz, fieldName), object);
+    }
+
+    private static Object getFieldValue(final Field field, final Object object) {
+        boolean access = field.isAccessible();
+        try {
+            field.setAccessible(true);
+            return field.get(object);
+        }catch (Exception e){
+            return null;
+        }finally {
+            try{
+                field.setAccessible(access);
+            }catch (Exception ignored){
+
+            }
+        }
     }
 }

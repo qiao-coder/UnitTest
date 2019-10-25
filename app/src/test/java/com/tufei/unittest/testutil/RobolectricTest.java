@@ -2,6 +2,8 @@ package com.tufei.unittest.testutil;
 
 import android.app.Application;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -20,7 +22,7 @@ import org.robolectric.shadows.ShadowLog;
  * @author tufei
  * @date 2018/3/7.
  */
-@RunWith(RobolectricTestRunner.class)
+@RunWith(AndroidJUnit4.class)
 @Config(application = Application.class)
 @Ignore
 public class RobolectricTest {

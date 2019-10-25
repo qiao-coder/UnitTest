@@ -2,6 +2,8 @@ package com.tufei.unittest.testutil;
 
 import android.app.Application;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;

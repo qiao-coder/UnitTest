@@ -1,5 +1,7 @@
 package com.tufei.unittest.combat_exercise;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.tufei.unittest.net.GithubRepository;
 import com.tufei.unittest.net.HttpService;
 import com.tufei.unittest.testutil.RetrofitMockFactory;
@@ -23,6 +25,7 @@ public class NetworkMockTest {
     }
 
     @Test
+    @VisibleForTesting
     public void getUser() {
         mGithubRepository.getUser()
                 .test()
