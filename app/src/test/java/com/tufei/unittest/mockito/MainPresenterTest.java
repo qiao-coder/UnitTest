@@ -33,9 +33,8 @@ public class MainPresenterTest {
     /**
      * {@link ArgumentCaptor}Captor是一个功能强大的Mockito API，用于捕获参数值并使用它们,
      * 对它们进行进一步的行动或断言。但我在自己的项目里，相比回调。更多的时候，用的都是
-     * RxJava来获取model层的数据。好处是，不用声明各种回调接口,而RxJava在设计的时候，就考
-     * 虑到了测试的问题，更易于写测试代码。坏处，唔，RxJava的话，相当于获取model层的数据，
-     * 只有OnSuccess、OnError两种情况。有时当你面对更多的情况的时候，恐怕只能用回调了。
+     * RxJava来获取model层的数据。好处是，不用声明各种回调接口,而且RxJava在设计的时候，就考
+     * 虑到了测试的问题，更易于写测试代码。
      */
     @Captor
     private ArgumentCaptor<GetDataCallback> getDataCallbackCaptor;

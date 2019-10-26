@@ -42,7 +42,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
  */
 @RunWith(AndroidJUnit4.class)
 @Config(application = Application.class)
-public class MainActivityTTest {
+public class MainActivityTest {
     @Rule
     public IntentsTestRule<MainActivity> intentsTestRule = new IntentsTestRule<>(MainActivity.class, true, false);
 
