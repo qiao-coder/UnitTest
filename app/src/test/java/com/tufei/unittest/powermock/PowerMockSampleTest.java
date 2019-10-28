@@ -357,7 +357,7 @@ public class PowerMockSampleTest {
     }
 
     @Test
-    public void mockStatic_mockPublicStaticMethodReturnStringButThrowException() {
+    public void mockStatic_mockPublicStaticMethodReturnStringButThrowException() throws Exception {
         String newValue = "mockPublicStaticMethodReturnStringButThrowException";
 
         PowerMockito.mockStatic(PowerMockSample.class);
@@ -365,9 +365,14 @@ public class PowerMockSampleTest {
         //没有抛异常，所以没有走真实逻辑。返回了null。
         assertEquals(null, PowerMockSample.publicStaticMethodReturnStringButThrowException());
 
-        when(PowerMockSample.publicStaticMethodReturnStringButThrowException()).thenReturn(newValue);
-        //public static方法，不能用doReturn。会抛UnfinishedStubbingException异常。
-//        doReturn(newValue).when(PowerMockSample.publicStaticMethodReturnStringButThrowException());
+        //when...thenReturn...也是一样的效果。不会走真实逻辑。
+        //两种when写法没什么区别。
+        //when(PowerMockSample.class,"publicStaticMethodReturnStringButThrowException").thenReturn(newValue);
+       //when(PowerMockSample.publicStaticMethodReturnStringButThrowException()).thenReturn(newValue);
+
+        //错误的doReturn写法。会抛UnfinishedStubbingException异常。
+        //doReturn(newValue).when(PowerMockSample.publicStaticMethodReturnStringButThrowException());
+        doReturn(newValue).when(PowerMockSample.class,"publicStaticMethodReturnStringButThrowException");
         assertEquals(newValue, PowerMockSample.publicStaticMethodReturnStringButThrowException());
     }
 
@@ -380,10 +385,11 @@ public class PowerMockSampleTest {
         //会走真实逻辑。
         assertEquals(3, PowerMockSample.publicStaticMethodCalculate(1, 2));
 
+        //两种when...thenReturn...写法没什么区别。但when是会走真实逻辑的。
 //        when(PowerMockSample.publicStaticMethodCalculate(isA(int.class), isA(int.class))).thenReturn(expected);
-        //不妥，会先走一遍真实逻辑
 //        when(PowerMockSample.class,"publicStaticMethodCalculate",isA(int.class),isA(int.class)).thenReturn(expected);
-        //会抛UnfinishedStubbingException异常。
+
+        //错误的doReturn写法，会抛UnfinishedStubbingException异常。
 //        doReturn(expected).when(PowerMockSample.publicStaticMethodCalculate(isA(int.class),isA(int.class)));
         doReturn(expected).when(PowerMockSample.class, "publicStaticMethodCalculate", isA(int.class), isA(int.class));
         assertEquals(expected, PowerMockSample.publicStaticMethodCalculate(1, 2));
@@ -392,13 +398,16 @@ public class PowerMockSampleTest {
     @Test
     public void spyClass_mockPrivateStaticMethodNoReturnThrowException() throws Exception {
         PowerMockito.spy(PowerMockSample.class);
-
+        boolean isThrowException = false;
         try {
             Whitebox.invokeMethod(PowerMockSample.class, "privateStaticMethodNoReturnThrowException");
         } catch (Exception e) {
-            assertEquals(NullPointerException.class, e.getClass());
+            isThrowException = true;
         }
+        //抛异常，执行了真实逻辑。
+        assertEquals(true,isThrowException);
 
+        //没有返回值的方法，只能通过doNothing...when...
         doNothing().when(PowerMockSample.class, "privateStaticMethodNoReturnThrowException");
         Whitebox.invokeMethod(PowerMockSample.class, "privateStaticMethodNoReturnThrowException");
     }
@@ -414,7 +423,7 @@ public class PowerMockSampleTest {
         }
 
         //传的是mock过的class
-        //没有返回值的方法，只能通过方法名
+        //没有返回值的方法，只能通过doNothing...when...
         doNothing().when(PowerMockSample.class, "publicStaticMethodNoReturnThrowException");
 
         PowerMockSample.publicStaticMethodNoReturnThrowException();
