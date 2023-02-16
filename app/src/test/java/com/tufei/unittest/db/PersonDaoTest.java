@@ -41,7 +41,7 @@ public class PersonDaoTest extends RobolectricTest {
 
     @Test
     public void savePerson_getPerson() {
-        personsDao.insertPersion(tony);
+        personsDao.insertPerson(tony);
         personsDao.getPersonById("1")
                 .test()
                 .assertNoErrors()
@@ -52,8 +52,8 @@ public class PersonDaoTest extends RobolectricTest {
 
     @Test
     public void savePersons_getPersons() {
-        personsDao.insertPersion(tony);
-        personsDao.insertPersion(marry);
+        personsDao.insertPerson(tony);
+        personsDao.insertPerson(marry);
 
         ArrayList<Person> persons = new ArrayList<>();
         persons.add(tony);
@@ -67,7 +67,7 @@ public class PersonDaoTest extends RobolectricTest {
 
     @Test
     public void savePerson_deletePerson() {
-        personsDao.insertPersion(tony);
+        personsDao.insertPerson(tony);
         personsDao.deletePersonById("1");
 
         personsDao.getPersonById("1")
@@ -79,8 +79,8 @@ public class PersonDaoTest extends RobolectricTest {
 
     @Test
     public void savePersons_deletePersons() {
-        personsDao.insertPersion(tony);
-        personsDao.insertPersion(marry);
+        personsDao.insertPerson(tony);
+        personsDao.insertPerson(marry);
 
         personsDao.deletePersons();
 

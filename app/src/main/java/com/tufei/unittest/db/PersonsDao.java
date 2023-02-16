@@ -40,7 +40,7 @@ public interface PersonsDao {
      * @param person the person to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPersion(Person person);
+    void insertPerson(Person person);
 
     /**
      * Update a person.

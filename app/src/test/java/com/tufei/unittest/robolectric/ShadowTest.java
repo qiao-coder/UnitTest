@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  * @date 2019/10/25.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(shadows = {ShadowTest.ShadowPerson.class}, manifest = Config.NONE)
+@Config(shadows = {ShadowTest.ShadowPerson.class}, manifest = Config.NONE,sdk = 28)
 public class ShadowTest {
     public static class Person {
         public String sayHello() {

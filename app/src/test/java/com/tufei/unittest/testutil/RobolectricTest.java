@@ -23,7 +23,7 @@ import org.robolectric.shadows.ShadowLog;
  * @date 2018/3/7.
  */
 @RunWith(AndroidJUnit4.class)
-@Config(application = Application.class)
+@Config(application = Application.class, sdk = 28)
 @Ignore
 public class RobolectricTest {
     @Rule

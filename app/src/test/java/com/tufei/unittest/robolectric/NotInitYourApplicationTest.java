@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config;
  * @date 2018/3/10.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(application = Application.class)
+@Config(application = Application.class,sdk = 28)
 public class NotInitYourApplicationTest {
 
     @Rule

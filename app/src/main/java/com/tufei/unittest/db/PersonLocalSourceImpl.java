@@ -30,7 +30,7 @@ public class PersonLocalSourceImpl implements PersonLocalSource {
 
     @Override
     public Completable savePerson(Person person) {
-        return new CompletableFromAction(() -> mPersonsDao.insertPersion(person));
+        return new CompletableFromAction(() -> mPersonsDao.insertPerson(person));
     }
 
     @Override

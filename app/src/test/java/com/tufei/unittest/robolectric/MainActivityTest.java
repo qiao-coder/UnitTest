@@ -41,7 +41,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
  * @date 2019/5/21.
  */
 @RunWith(AndroidJUnit4.class)
-@Config(application = Application.class)
+@Config(application = Application.class,sdk = 28)
 public class MainActivityTest {
     @Rule
     public IntentsTestRule<MainActivity> intentsTestRule = new IntentsTestRule<>(MainActivity.class, true, false);
